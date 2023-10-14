@@ -22,3 +22,6 @@ go.work
 
 # GraphQL
 tools.go
+
+# Sqlite
+*.db
