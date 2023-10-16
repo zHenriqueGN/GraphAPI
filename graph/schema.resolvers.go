@@ -48,9 +48,9 @@ func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, erro
 	return categoriesModel, nil
 }
 
-// Courser is the resolver for the courser field.
-func (r *queryResolver) Courser(ctx context.Context) ([]*model.Course, error) {
-	panic(fmt.Errorf("not implemented: Courser - courser"))
+// Course is the resolver for the course field.
+func (r *queryResolver) Course(ctx context.Context) ([]*model.Course, error) {
+	panic(fmt.Errorf("not implemented: Course - course"))
 }
 
 // Mutation returns MutationResolver implementation.
