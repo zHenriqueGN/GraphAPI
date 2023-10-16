@@ -78,7 +78,7 @@ type MutationResolver interface {
 }
 type QueryResolver interface {
 	Categories(ctx context.Context) ([]*model.Category, error)
-	Course(ctx context.Context) ([]*model.Course, error)
+	Courses(ctx context.Context) ([]*model.Course, error)
 }
 
 type executableSchema struct {
@@ -967,7 +967,7 @@ func (ec *executionContext) _Query_course(ctx context.Context, field graphql.Col
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Course(rctx)
+		return ec.resolvers.Query().Courses(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
