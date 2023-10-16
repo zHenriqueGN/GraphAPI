@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/zHenriqueGN/GraphAPI/graph/model"
 )
@@ -26,7 +25,15 @@ func (r *mutationResolver) CreateCategory(ctx context.Context, input *model.NewC
 
 // CreateCourse is the resolver for the createCourse field.
 func (r *mutationResolver) CreateCourse(ctx context.Context, input *model.NewCourse) (*model.Course, error) {
-	panic(fmt.Errorf("not implemented: CreateCourse - createCourse"))
+	course, err := r.CourseDB.Create(input.Name, *input.Description, input.CategoryID)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Course{
+		ID:          course.ID,
+		Name:        course.Name,
+		Description: &course.Description,
+	}, nil
 }
 
 // Categories is the resolver for the categories field.
@@ -48,9 +55,23 @@ func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, erro
 	return categoriesModel, nil
 }
 
-// Courser is the resolver for the courser field.
-func (r *queryResolver) Courser(ctx context.Context) ([]*model.Course, error) {
-	panic(fmt.Errorf("not implemented: Courser - courser"))
+// Course is the resolver for the course field.
+func (r *queryResolver) Courses(ctx context.Context) ([]*model.Course, error) {
+	courses, err := r.CourseDB.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var coursesModel []*model.Course
+	for _, course := range courses {
+		coursesModel = append(coursesModel, &model.Course{
+			ID:          course.ID,
+			Name:        course.Name,
+			Description: &course.Description,
+		})
+	}
+
+	return coursesModel, nil
 }
 
 // Mutation returns MutationResolver implementation.
