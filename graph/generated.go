@@ -48,7 +48,7 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Category struct {
-		Courses    func(childComplexity int) int
+		Courses     func(childComplexity int) int
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Name        func(childComplexity int) int
@@ -68,7 +68,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Categories func(childComplexity int) int
-		Course    func(childComplexity int) int
+		Courses    func(childComplexity int) int
 	}
 }
 
@@ -187,12 +187,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Categories(childComplexity), true
 
-	case "Query.course":
-		if e.complexity.Query.Course == nil {
+	case "Query.courses":
+		if e.complexity.Query.Courses == nil {
 			break
 		}
 
-		return e.complexity.Query.Course(childComplexity), true
+		return e.complexity.Query.Courses(childComplexity), true
 
 	}
 	return 0, false
@@ -953,8 +953,8 @@ func (ec *executionContext) fieldContext_Query_categories(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_course(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_course(ctx, field)
+func (ec *executionContext) _Query_courses(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_courses(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -984,7 +984,7 @@ func (ec *executionContext) _Query_course(ctx context.Context, field graphql.Col
 	return ec.marshalNCourse2ᚕᚖgithubᚗcomᚋzHenriqueGNᚋGraphAPIᚋgraphᚋmodelᚐCourseᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_course(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_courses(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -3201,7 +3201,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "course":
+		case "courses":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -3210,7 +3210,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_course(ctx, field)
+				res = ec._Query_courses(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
